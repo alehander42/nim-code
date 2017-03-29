@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">  
+    <Type Name="NimStringDesc">
+        <DisplayString>@"{data}" {Sup.len} </DisplayString>
+        <!--<DisplayString>{data,[Sup.len]}</DisplayString>-->
+        <!--I borrowed this syntax from a Rust natvis issue, but I can't get any version of it 
+        to work. [length]s<size> should be correct for specifying how much bytes-->
+    </Type>
+    <Type Name="TGenericSeq">
+        <DisplayString>{{len: {len} reserved: {reserved}}}</DisplayString>
+    </Type>
+    <!--seq of int-->
+    <Type Name="TY_qwqHTkRvwhrRyENtudHQ7g">
+        <DisplayString>{{ len={Sup.len} }}</DisplayString>
+        <Expand>
+            <Item Name="[len]" ExcludeView="simple">Sup.len</Item>
+            <Item Name="[capacity]" ExcludeView="simple">Sup.reserved</Item>
+            <IndexListItems>
+                <Size>Sup.len</Size>
+                <ValueNode>data[$i]</ValueNode>
+            </IndexListItems>
+        </Expand>
+    </Type>
+    <!-- seq of string-->
+    <Type name="TY_sM4lkSb7zS6F7OVMvW9cffQ">
+        <DisplayString>{{ len={Sup.len} }}</DisplayString>
+        <Expand>
+            <Item Name="[len]" ExcludeView="simple">Sup.len</Item>
+            <Item Name="[capacity]" ExcludeView="simple">Sup.reserved</Item>
+            <IndexListItems>
+                <Size>Sup.len</Size>
+                <ValueNode>data[$i]</ValueNode>
+            </IndexListItems>
+        </Expand>
+    </Type>
+    <!--set of int -->
+    <Type Name="HashSet_J1RbOJyRcRl1E5zDK6YKcQ">
+        <DisplayString>{{ set len={counter} }}</DisplayString>
+        <Expand>    
+            <Item Name="[len]" ExcludeView="simple">data.Sup.len</Item>
+            <Item Name="[capacity]" ExcludeView="simple">data.Sup.reserved</Item>
+            <!--debug len-->
+            <IndexListItems>
+                <Size>data.Sup.len</Size>
+                <ValueNode>data.data[$i]</ValueNode>
+            </IndexListItems>
+        </Expand>
+    </Type>
+    <!--table of int string-->
+    <Type Name="Table_Uofq2l1MbIBlIicSEZkj7w">
+        <DisplayString>{{ table len={counter} }}</DisplayString>
+        <Expand>    
+            <Item Name="[len]" ExcludeView="simple">data.Sup.len</Item>
+            <Item Name="[capacity]" ExcludeView="simple">data.Sup.reserved</Item>
+            <!--<CustomListItems MaxItemsPerView="5000" ExcludeView="Test"> -->
+                <!--<Size>Sup.len</Size>-->
+                <!--<ValueNode>data[$i]</ValueNode>-->
+            <!--</IndexListItems>-->-->
+            <IndexListItems>
+                <Size>data.Sup.len</Size>
+                <ValueNode>data.data[$i]</ValueNode>
+            </IndexListItems>
+        </Expand>
+    </Type>
+</AutoVisualizer>
